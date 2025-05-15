@@ -1,0 +1,35 @@
+
+name: Build & Zip Jekyll Site
+
+on:
+  push:
+
+jobs:
+  build-and-zip:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: Build site with Jekyll
+        run: bundle exec jekyll build --destination _site
+
+      - name: Zip built site
+        run: zip -r alk246_er495_srb343.zip _site
+
+      - name: Upload zip artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: alk246_er495_srb343
+          path: alk246_er495_srb343.zip

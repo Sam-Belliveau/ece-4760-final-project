@@ -28,6 +28,22 @@ baseurl: ""
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-toc
+
+kramdown:
+  auto_ids: true
+  toc_levels: 1..6    # which heading levels to include
+toc:
+  min_levels: 1       # smallest <h*> to include
+  max_levels: 3       # largest <h*> to include
+  list_number: false
+  no_toc_section_class: "no_toc"
+  html_class: "toc-list"
+
+include:
+  - assets/
+  - assets/css/custom.css
+
 
 # Exclude from processing.
 # The following items will not be processed, by default.

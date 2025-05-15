@@ -1,15 +1,24 @@
 .float-right {
-    float: right;
-    max-width: 300px;
-    margin-left: 10px;
-    border-radius: 10px;
-    border: 1px solid #c0c0c0;
-  }
-  
-  .bordered {
-    display: block;
-    border: 1px solid #c0c0c0;
-    border-radius: 10px;
-    margin: 0 auto;
-  }
-  
+  float: right;
+  max-width: 300px;
+  margin-left: 10px;
+  border-radius: 10px;
+  border-color: #c0c0c0;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.bordered {
+  max-width: 80%;
+  display: block;
+  border-color: #c0c0c0;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.smaller {
+    max-width: 60%;
+}
