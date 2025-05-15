@@ -6,6 +6,7 @@ permalink: "/"
 
 <link rel="stylesheet" href="./assets/css/custom.css">
 
+[Download latest ZIP](https://github.com/Sam-Belliveau/ece-4760-final-project/releases/latest/download/alk246_er495_srb343.zip)
 
 # 0. Table of Contents
 <details open markdown="block">
