@@ -38,9 +38,8 @@ permalink: "/"
 
 # 1. Project Introduction
 
-
-<div style="display:flex; align-items:flex-start; gap:1rem;">
-  <iframe width="100%" height=340px src="https://www.youtube.com/embed/yFkt5Urp-eg" frameborder="0" allowfullscreen></iframe>
+<div style="display:flex; align-items:flex-center; gap:1rem; margin-left: auto; margin-right: auto;">
+  <iframe width="720px" height="405px" src="https://www.youtube.com/embed/yFkt5Urp-eg" frameborder="1" allowfullscreen class="full-bordered"></iframe>
 </div>
 
 ## 1.1 Summary
