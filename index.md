@@ -19,14 +19,16 @@ permalink: "/"
 
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-[Download latest ZIP](https://github.com/Sam-Belliveau/ece-4760-final-project/releases/latest/download/alk246_er495_srb343.zip)
+# Our device listens with multiple "ears," using cross-correlation to instantly point you toward a sound’s origin.
+
+--- 
 
 # 0. Table of Contents
 
 <details open markdown="block">
 <summary>Click to Hide</summary>
 
-1. TOC
+- TOC
 {:toc}
 
 </details>
@@ -35,15 +37,12 @@ permalink: "/"
 
 # 1. Project Introduction
 
-## 1.1 Sound bite
 
-Our device listens with multiple "ears," using cross-correlation to instantly point you toward a sound’s origin.
+<div style="display:flex; align-items:flex-start; gap:1rem;">
+  <iframe width="100%" height=340px src="https://www.youtube.com/embed/yFkt5Urp-eg" frameborder="0" allowfullscreen></iframe>
+</div>
 
-_video goes here_
-
-![Sound bite](./assets/images/sam_clap.jpg){: .bordered }
-
-## 1.2 Summary
+## 1.1 Summary
 
 In this project, we designed a real-time sound localization system using a Raspberry Pi Pico and three microphones. Audio from each of the MEMS microphones was continuously sampled at \($50\,\mathrm{kHz}$\) via the Pico’s DMA engine.
 
