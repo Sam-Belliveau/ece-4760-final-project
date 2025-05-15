@@ -34,8 +34,16 @@ plugins:
 nav_enabled: false
 back_to_top: true
 back_to_top_text: "Back to top"
+markdown: kramdown
 
 kramdown:
+  input: GFM
+  math_engine: mathjax
+  math_engine_opts:
+    preview: true
+    # point to the MathJax v3 bundle
+    mathjax_url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+  # enable auto IDs so your TOC and anchors still work
   auto_ids: true
   toc_levels: 1..1    # which heading levels to include
 toc:

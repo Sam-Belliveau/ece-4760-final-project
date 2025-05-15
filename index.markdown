@@ -8,6 +8,17 @@ permalink: "/"
 <link rel="stylesheet" href="./assets/css/just-the-docs-default.css">
 <script src="./assets/js/just-the-docs.js"></script>
 
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']]
+    }
+  };
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 [Download latest ZIP](https://github.com/Sam-Belliveau/ece-4760-final-project/releases/latest/download/alk246_er495_srb343.zip)
 
 # 0. Table of Contents
@@ -59,7 +70,10 @@ We decided to implement a time-difference-of-arrival (TDOA) method to determine 
 
 ## 2.2 Background Math
 
-At standard temperature and pressure, the speed of sound is approximately 343 m/s. This means that for every additional centimeter between microphones, the maximum travel time is: [(distance)/(velocity) → (0.01 m)/(343 m/s) ≈ 29.15 μs] 
+At standard temperature and pressure, the speed of sound is approximately 343 m/s. This means that for every additional centimeter between microphones, the maximum travel time is:
+
+$$\frac{\text{distance}}{\text{velocity}} = \frac{0.01 \text{ m}}{343 \text{ m/s}} \approx 29.15 \mu s$$
+
 Due to discrete sampling, time-difference estimates are quantized by the ADC sample period and microphone spacing.
 
 For example, sampling at 100 kHz (10 μs per sample) with an equilateral microphone triangle of 10 cm sides yields a maximum shift of about ±30 samples (±292 μs/10 μs). Each pair of microphones then produces an integer shift in [–30, +30] indicating their relative time difference.
