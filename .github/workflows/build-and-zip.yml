@@ -29,7 +29,7 @@ jobs:
         run: zip -r alk246_er495_srb343.zip _site
 
       - name: Upload zip artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: alk246_er495_srb343
           path: alk246_er495_srb343.zip
