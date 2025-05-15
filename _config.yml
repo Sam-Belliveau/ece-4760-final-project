@@ -29,6 +29,7 @@ theme: just-the-docs
 plugins:
   - jekyll-feed
   - jekyll-toc
+  - jekyll-remote-theme
 
 nav_enabled: false
 back_to_top: true
