@@ -46,8 +46,9 @@ toc:
   html_class: "toc-list"
 
 include:
-  - assets/
-  - assets/css/custom.css
+  - assets/css/*
+  - assets/js/*
+  - assets/images/*
   - _includes/
 
 sidebar:
