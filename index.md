@@ -88,13 +88,16 @@ With three microphones, there are roughly $61^3$ distinct shift combinations. In
 
 ### Cross Correlation
 The cross correlation calculation makes up the core of our algorithm. Cross‑correlation is a sliding inner‑product that quantifies the similarity between two signals as one is shifted in time. The cross correlation operation is defined as 
+
 $$ 
 R_{xy}[k] \;=\;\sum_{n=-\infty}^{\infty} x[n]\,y[n + k]
 $$
+
 In our case, the cross correlation peaks at a point k which represents the point at which the signals overlap the most. 
 $$
 time_delay = \frac{k_max}{f_s}. 
 $$
+
 Though we use a more complex version of this, the goal of our system is to find this k_max value to find the time shift between microphones. In our project, this k is represented by the best shift. We apply some smoothing and filtering techiques, but at its core, our project finds these shifts between the microphones and uses it to determine the audio source. 
 
 ## 2.3 Logical Structure
