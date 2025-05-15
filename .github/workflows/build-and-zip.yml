@@ -15,7 +15,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.x'
+          ruby-version: '3.4.4'
 
       - name: Install dependencies
         run: |
@@ -23,13 +23,13 @@ jobs:
           bundle install
 
       - name: Build site with Jekyll
-        run: bundle exec jekyll build --destination _site
+        run: bundle exec jekyll build --destination alk246_er495_srb343
 
       - name: Zip built site
-        run: zip -r alk246_er495_srb343.zip _site
+        run: zip -r alk246_er495_srb343.zip alk246_er495_srb343
 
       - name: Upload zip artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: alk246_er495_srb343
           path: alk246_er495_srb343.zip
