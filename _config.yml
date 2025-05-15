@@ -25,17 +25,21 @@ description: >- # this means to ignore newlines until "baseurl:"
 baseurl: ""
 
 # Build settings
-theme: minima
+theme: just-the-docs
 plugins:
   - jekyll-feed
   - jekyll-toc
 
+nav_enabled: false
+back_to_top: true
+back_to_top_text: "Back to top"
+
 kramdown:
   auto_ids: true
-  toc_levels: 1..6    # which heading levels to include
+  toc_levels: 1..1    # which heading levels to include
 toc:
   min_levels: 1       # smallest <h*> to include
-  max_levels: 3       # largest <h*> to include
+  max_levels: 1       # largest <h*> to include
   list_number: false
   no_toc_section_class: "no_toc"
   html_class: "toc-list"
@@ -43,7 +47,11 @@ toc:
 include:
   - assets/
   - assets/css/custom.css
+  - _includes/
 
+sidebar:
+  nav: docs
+  page: auto
 
 # Exclude from processing.
 # The following items will not be processed, by default.
