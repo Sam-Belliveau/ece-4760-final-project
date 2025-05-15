@@ -51,7 +51,7 @@ include:
   - assets/images/*
   - _includes/
 
-heading_anchors: false
+heading_anchors: true
 
 sidebar:
   nav: docs
