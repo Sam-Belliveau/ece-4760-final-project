@@ -5,6 +5,7 @@ permalink: "/"
 ---
 
 <link rel="stylesheet" href="./assets/css/custom.css">
+<link rel="stylesheet" href="./assets/css/just-the-docs-default.css">
 
 [Download latest ZIP](https://github.com/Sam-Belliveau/ece-4760-final-project/releases/latest/download/alk246_er495_srb343.zip)
 
