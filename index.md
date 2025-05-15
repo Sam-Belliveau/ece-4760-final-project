@@ -143,8 +143,6 @@ A \($330\,\Omega$\) resistor in series (with the Pico’s internal \($70\,\Omega
 
 ## 3.2 Core Software Loop
 
-Detail `sample_and_compute_loop()` in `sample_compute.c`, from buffer refilling through threshold-based activity detection to correlation and VGA draw.
-
 The heart of the system resides in the `sample_and_compute_loop()` function within `sample_compute.c`, which orchestrates audio capture, processing, and visualization. Upon startup, `vga_init()` prepares the display subsystem.
 
 The loop initializes three rolling buffers—one per microphone—and records time for pacing. In the inner sampling loop, the code:
