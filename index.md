@@ -94,6 +94,7 @@ R_{xy}[k] \;=\;\sum_{n=-\infty}^{\infty} x[n]\,y[n + k]
 $$
 
 In our case, the cross correlation peaks at a point k which represents the point at which the signals overlap the most. 
+
 $$
 time_delay = \frac{k_max}{f_s}. 
 $$
