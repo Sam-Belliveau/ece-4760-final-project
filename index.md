@@ -20,6 +20,7 @@ permalink: "/"
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 # Our device listens with multiple "ears," using cross-correlation to instantly point you toward a sound’s origin.
+{: .no_toc .flex-justify-around .text-center }
 
 --- 
 
