@@ -87,12 +87,13 @@ For example, sampling at \($100\,\mathrm{kHz}$\) \($10\,\mu\mathrm{s}$ per sampl
 With three microphones, there are roughly $61^3$ distinct shift combinations. Increasing the ADC rate or spacing the microphones farther apart increases resolution by allowing more distinct shifts.
 
 ### FFT Based-Approaches
-To efficiently calculate the Time Difference of Arrival (TDOA) between two microphone signals, $x[n]$ and $y[n]$, using an FFT-based approach, the following steps are typically performed:
+To efficiently calculate the Time Difference of Arrival (TDOA) between two microphone signals, $x[n]$ and $y[n]$, using an FFT-based approach, the following core steps are typically performed:
 
 1.  **Compute Discrete Fourier Transforms (DFTs):**
     The DFTs of the windowed signal frames are calculated.
-2.  **Form the (Weighted) Cross-Power Spectrum:**
-    The cross-power spectrum $$ P_{xy}(\omega) = X(\omega) Y^*(\omega) $$ is computed, where $Y^*(\omega)$ is the complex conjugate of $Y(\omega)$. For improved robustness, especially in noisy or reverberant conditions, a weighting function is applied.
+2. **Form the (Weighted) Cross-Power Spectrum:**  
+   The cross-power spectrum is computed as $P_{xy}(\omega) = X(\omega)*Y^*(\omega)$
+   where $Y^*(\omega)$ represents the complex conjugate of $Y(\omega)$.  
 4.  **Compute Inverse DFT (IDFT):**
     The cross-correlation sequence $r_{xy}[k]$ in the time lag domain is obtained by taking the IDFT of $P_{xy}(\omega)$:
     This sequence represents the correlation between the two signals for various time lags $k$.
@@ -106,7 +107,7 @@ On board the Pico, the FFT module requires a fair bit of compute in terms of mem
 The cross correlation calculation makes up the core of our algorithm. Cross‑correlation is a sliding inner‑product that quantifies the similarity between two signals as one is shifted in time. The cross correlation operation is defined as 
 
 $$ 
-R_{xy}[k] \;=\;\sum_{n=-\infty}^{\infty} x[n]\,y[n + k]
+R_{xy}[k] \;=\ \sum_{n=-\infty}^{\infty} x[n]\,y[n + k]
 $$
 
 In our case, the cross correlation peaks at a point k which represents the point at which the signals overlap the most.  
@@ -317,8 +318,10 @@ An assumption our triangulation makes is that the noise is coming from roughly 1
 
 ## 6.1 Design Evaluation & Lessons Learned
 
-<!-- Analyze how results matched expectations, discuss potential improvements (e.g., fixed-point vs floating-point, faster PIO implementations). -->
-In our design, our cross-correlation design yielded a result significantely better than we expected. As compared to a Time of Arrival or FFT based approach, our cross
+<!-- Analyze how results matched expectations, discuss potential improvements (e.g., fixed-point vs floating-point, faster PIO implementations). -->.
+In our design, our cross-correlation design yielded a result significantly better than we expected. As compared to an FFT based approach, our cross-correlation approach, combined with some of our additional filtering techniques, performed in a comparable fashion. By implementing everything in fixed-point arithmetic, we were able to actually achieve very fast localization and rendering. In terms of DSP techniques, we ended up intuiting a lot about the dynamics of the room. For example, we realized that the Gaussian Smoothing and Windowing were required in order to minimize picking up on noise and to better track movement. In our implementation, we had to do significant experimentation to tune our algorithm, be it determining the sample rate, window size, buffering, and so on. Overall our final implementation resulted in code which was very modular and well organized. The design we utilized in the end only relied on a single core of the Pico, meaning we still left a fair bit of performance on the table. Nonetheless, our system was fast and performative, and made for a compelling demonstration of the underlying math. 
+
+In terms of the accuracy of our detection, we likely got somewhere close to the theoretical limit of what we could do. There is inherent noise in the microphones, as well as in the room when we were testing. As a result, there is still some noise present in our VGA heatmap and localization. Overall, the project taught us a lot about DSP on audio and efficient implementation. A major takeaway we have is the power of these microcontrollers and software-hardware codesign. It was very interesting to observe how modifying our algorithm to match the hardware led to such a performant system. 
 
 ## 6.2 Standards Compliance
 
