@@ -23,9 +23,10 @@ $$
 \approx 29.15\,\mu\mathrm{s}
 $$
 
+![Resolution gif](./assets/images/sample_rate_resolution_char.gif){: .float-right }
+
 Due to discrete sampling, time-difference estimates are quantized by the ADC sample period and microphone spacing.
 
-![Resolution gif](./assets/images/sample_rate_resolution_char.gif){: .float-right }
 
 The Desmos visualization demonstrates our system's theoretical resolution as a function of sampling rate. The gif displays resolution for rates from $0$ to $50\,\mathrm{kHz}$ at $2\,\mathrm{kHz}$ intervals. Each curve intersection represents a uniquely identifiable sound location, creating a discrete positional grid. White regions within the triangular array map to their nearest intersection point, showing the practical resolution limits at different sampling frequencies.
 
@@ -70,31 +71,19 @@ $$ x[n] * y[n] \Leftrightarrow X(f) \cdot Y(f) $$
 
 This property transforms the computationally expensive $O(N^2)$ cross-correlation operation into an $O(N\log N)$ process. However, for our buffer size of $N=1024$, this theoretical advantage provided minimal practical speedup. More importantly, the FFT approach introduced additional complications: increased sensitivity to phase shifts from our filters and vulnerability to non-equivalent sampling times between our three microphones. One of the innovations of our project is to remove the need for the calculation of the FFT prior to taking the cross-correlation. So while these approaches operate in the frequency domain, we operate on the sampled microphone power level readings. 
 
-### TDOA Conversion to Position
-Once $\tau_{\text{delay}}$ is found between a pair of microphones, it implies that the sound source lies on a specific hyperboloid with the microphones as foci.
-$$ c \cdot \tau_{\text{delay}} = d_2 - d_1 $$
-where $c$ is the speed of sound, and $d_1, d_2$ are the distances from the source to microphone 1 and 2, respectively.
-By using multiple microphone pairs, multiple TDOAs can be calculated, and the intersection of the corresponding hyperboloids gives an estimate of the sound source's location. For instance, with two microphones, the TDOA can give an angle of arrival (AOA) relative to the microphone axis. This approach is what is used in our implementation and also in many FFT-based systems. 
-
-$$ 
-R_{xy}[k] \;=\;\sum_{n=-\infty}^{\infty} x[n]\,y[n + k]
-$$
-
-In our case, the cross correlation peaks at a point k which represents the point at which the signals overlap the most.  
-
-### Time Delay of Arrival (TDOA) Calculation
-$$
-t_{delay} = \frac{k_{max}}{f_s}. 
-$$
-
-Though we use a more complex version of this, the goal of our system is to find this k_max value to find the time shift between microphones. In our project, this k is represented by the best shift. We apply some smoothing and filtering techiques, but at its core, our project finds these shifts between the microphones and uses it to determine the audio source. 
+![Resolution gif](./assets/images/hyperbola_density_based_on_distance.gif){: .float-right }
 
 ### TDOA Conversion to Position
-Once $\tau_{\text{delay}}$ is found between a pair of microphones, it implies that the sound source lies on a specific hyperboloid with the microphones as foci.
+In our implementation, we actually perform the inverse operation: converting possible positions to expected TDOA values. For each point in the VGA display space, we calculate what the theoretical time delay would be between each microphone pair if a sound originated from that position.
+
 $$ c \cdot \tau_{\text{delay}} = d_2 - d_1 $$
-where $c$ is the speed of sound, and $d_1, d_2$ are the distances from the source to microphone 1 and 2, respectively.
-By using multiple microphone pairs, multiple TDOAs can be calculated, and the intersection of the corresponding hyperboloids gives an estimate of the sound source's location. For instance, with two microphones, the TDOA can give an angle of arrival (AOA) relative to the microphone axis. This approach is what is used in our implementation and also in many FFT-based systems. 
- 
+
+where $c$ is the speed of sound, and $d_1, d_2$ are the distances from the potential source position to microphones 1 and 2, respectively.
+
+Since our time delays are quantized by the sampling rate, only specific TDOA values are possible. These values create a grid of hyperbolas for each microphone pair, and only at the intersections of these hyperbolas can we uniquely identify a sound source. As shown in the animation, most points in space do not map to valid sample-shift combinations, so we map each position to its nearest hyperbola intersection.
+
+The visualization demonstrates how microphone spacing affects resolution. While we've scaled down the sampling rate in the animation for clarity, it illustrates a key principle: increasing the distance between microphones creates more hyperbolas within the same area, leading to more distinct intersection points. This effectively increases our system's spatial resolution without requiring a higher sampling rate.
+
 --- 
 ## 2.3 Logical Structure
 
