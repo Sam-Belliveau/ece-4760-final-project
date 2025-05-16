@@ -21,13 +21,13 @@ Analytically, it was intended to reduce spectral leakage before cross-correlatio
 
 ## 4.2 In-Plane Localization Methods
 
-We initially attempted full "in-plane" localization—solving for $(x,y)$ on the microphone plane—by combining three pairwise time delays with multilateration routines in `microphones.c`.
+We initially attempted full "in-plane" localization-solving for $(x,y)$ on the microphone plane-by combining three pairwise time delays with multilateration routines in `microphones.c`.
 
 ![Early Multilateration](./assets/images/mic_resolution_in_plane.png){: .bordered }
 
 While this worked for sources inside the triangle, it failed for sounds outside the array: hyperbolic delay curves intersected behind the microphones or at infinity.
 
-We recognized the array’s strength in angular estimation (parallel wavefronts) over absolute distance. By switching to angles of arrival above the array—using $\pm$`MAX_SHIFT_SAMPLES` cross-correlation shifts—we achieved robust direction estimates even off-axis.
+We recognized the array’s strength in angular estimation (parallel wavefronts) over absolute distance. By switching to angles of arrival above the array-using $\pm$`MAX_SHIFT_SAMPLES` cross-correlation shifts-we achieved robust direction estimates even off-axis.
 
 ![Final Multilateration](./assets/images/mic_resolution_above.png){: .bordered }
 
