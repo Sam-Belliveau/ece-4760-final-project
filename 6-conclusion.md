@@ -7,17 +7,23 @@ title: "6. Conclusion"
 
 ## 6.1 Design Evaluation & Lessons Learned
 
-<!-- Analyze how results matched expectations, discuss potential improvements (e.g., fixed-point vs floating-point, faster PIO implementations). -->
+Our cross-correlation implementation yielded results significantly better than we initially expected. The system demonstrated remarkable accuracy, particularly when working with our known-height assumption. By fixing the expected sound source height at 1 meter above the microphone plane, we were able to achieve accurate localization within 0.1 meters for sources positioned outside the microphone triangle, with reliable direction estimation extending to distances of 3-5 meters depending on the relative height of the audio source.
 
-In our design, our cross-correlation design yielded a result significantly better than we expected. As compared to an FFT based approach, our cross-correlation approach, combined with some of our additional filtering techniques, performed in a comparable fashion. 
+Our implementation required significant experimentation to tune the algorithm, including determining optimal sample rates, window sizes, buffering strategies, and more. The final implementation resulted in code that was very modular and well-organized. Notably, our design utilized only a single core of the Pico, meaning we still left considerable performance potential untapped.
 
-By implementing everything in fixed-point arithmetic, we were able to actually achieve very fast localization and rendering. In terms of DSP techniques, we ended up intuiting a lot about the dynamics of the room. For example, we realized that the Gaussian Smoothing and Windowing were required in order to minimize picking up on noise and to better track movement.
+### Potential Improvements
 
-In our implementation, we had to do significant experimentation to tune our algorithm, be it determining the sample rate, window size, buffering, and so on. Overall our final implementation resulted in code which was very modular and well organized. The design we utilized in the end only relied on a single core of the Pico, meaning we still left a fair bit of performance on the table. Nonetheless, our system was fast and performative, and made for a compelling demonstration of the underlying math. 
+Several promising avenues exist for further enhancing the system:
 
-In terms of the accuracy of our detection, we likely got somewhere close to the theoretical limit of what we could do. There is inherent noise in the microphones, as well as in the room when we were testing. As a result, there is still some noise present in our VGA heatmap and localization. 
+- **Wider microphone spacing and external ADC**: Increasing the distance between microphones along with faster ADC sampling via external hardware could dramatically improve resolution and range.
+- **Additional microphones**: Expanding beyond three microphones would create redundancy and improve noise rejection while enabling 3D localization.
+- **FFT-based correlation**: Implementing frequency-domain correlation calculations could improve computational efficiency for longer sample windows.
+- **Dual-core utilization**: Dedicating one core entirely to sampling and correlation while using the other for VGA rendering could improve responsiveness.
+- **Enhanced physical filtering**: Adding better analog filtering stages before the ADC to improve signal quality and reduce noise interference.
 
-Overall, the project taught us a lot about DSP on audio and efficient implementation. A major takeaway we have is the power of these microcontrollers and software-hardware codesign. It was very interesting to observe how modifying our algorithm to match the hardware led to such a performant system. 
+In terms of the accuracy of our detection, we approached the theoretical limits of what's possible with our hardware. Inherent noise in the microphones and testing environment introduced some inevitable uncertainty in our VGA heatmap and localization.
+
+Overall, the project taught us a great deal about audio DSP and efficient implementation. A major takeaway is the power of software-hardware codesign—modifying our algorithms to match the hardware capabilities led to a remarkably performant system despite the limited resources of the Pico.
 
 ## 6.2 Standards Compliance
 

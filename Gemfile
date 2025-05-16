@@ -25,8 +25,11 @@ platforms :mingw, :x64_mingw, :mswin, :jruby do
   gem "tzinfo-data"
 end
 
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
 # Performance-booster for watching directories on Windows
-gem "wdm", "~> 0.1", :platforms => [:mingw, :x64_mingw, :mswin]
+gem "wdm", "~> 0.1.1", :platforms => [:mingw, :x64_mingw, :mswin]
 
 # Lock `http_parser.rb` gem to `v0.6.x` on JRuby builds since newer versions of the gem
 # do not have a Java counterpart.
@@ -36,3 +39,6 @@ gem "just-the-docs"
 gem "jekyll-toc"
 
 gem "jekyll-remote-theme"
+
+# Lock the platform to support both Windows and Linux
+platforms :ruby, :mswin, :mingw, :x64_mingw, :jruby, :x86_64-linux
