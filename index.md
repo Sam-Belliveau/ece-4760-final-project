@@ -326,9 +326,7 @@ In terms of the accuracy of our detection, we likely got somewhere close to the 
 ## 6.2 Standards Compliance
 
 <!-- Comment on adherence to VGA timing specs, Pico hardware guidelines, and DSP best practices. -->
-Our design adhered to the VGA timing specification, utilizing the driver provided as part of the course. 
-
-Blah Blah blah…
+Our design adhered to the VGA timing specification, utilizing the driver provided as part of the course. This driver complies with the VGA standard, and we utilized the primitives in the driver to implement our VGA plotting. We powered the Pico with a standard 3.3V USB cable connected to a laptop. We overclock our design to 250 MHz, falling within the acceptable range of overlocking for the Pico. When sampling, we sampled above the Nyquist rate for our microphones, ensuring we didn't need an extra alias filter and following DSP best practices. 
 
 ---
 
