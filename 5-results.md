@@ -30,9 +30,17 @@ The system's accuracy exhibited predictable characteristics with distance:
 These characteristics are clearly demonstrated in our demo video:
 
 <div class="video-timestamps">
-  <p><a href="https://www.youtube.com/watch?v=yFkt5Urp-eg&t=517s" target="_blank"><strong>8:37</strong></a> — A speaker playing music positioned approximately 0.75 meters down and to the right of the microphone array center is accurately located on the heatmap, with both direction and distance correctly represented.</p>
+  <h4>8:37 — Speaker positioned down and to the right</h4>
+  <div style="display:flex; align-items:flex-center; margin-left: auto; margin-right: auto; margin-bottom: 20px;">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/yFkt5Urp-eg?start=517" frameborder="1" allowfullscreen class="bordered"></iframe>
+  </div>
+  <p>A speaker playing music positioned approximately 0.75 meters down and to the right of the microphone array center is accurately located on the heatmap, with both direction and distance correctly represented.</p>
   
-  <p><a href="https://www.youtube.com/watch?v=yFkt5Urp-eg&t=523s" target="_blank"><strong>8:43</strong></a> — The same speaker moved to the opposite side of the microphones is again accurately localized, demonstrating the system's consistent performance regardless of direction.</p>
+  <h4>8:43 — Speaker moved to the opposite side</h4>
+  <div style="display:flex; align-items:flex-center; margin-left: auto; margin-right: auto; margin-bottom: 20px;">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/yFkt5Urp-eg?start=523" frameborder="1" allowfullscreen class="bordered"></iframe>
+  </div>
+  <p>The same speaker moved to the opposite side of the microphones is again accurately localized, demonstrating the system's consistent performance regardless of direction.</p>
 </div>
 
 For most practical applications, we found the system performed optimally within a radius of about 2 meters from the array center. Beyond this distance, while direction remained reliable, absolute position became less precise, still suitable for most acoustic tracking applications where angular information is the primary concern.
@@ -47,7 +55,13 @@ Our microphones do not draw too much power and we comply with all safety standar
 
 The code is flashed to the Pico, making the system robust to power outs. Additionally, our system is also robust to the power off of one microphone. Our core logic continues to work, however we see an arc like heatmap, resulting from the loss of samples from the third microphone in the cross correlation logic. 
 
-With only two active microphones, the system can only generate a single hyperbolic curve of possible sound locations, resulting in a hyperbolic-shaped heatmap. This behavior is demonstrated at <a href="https://www.youtube.com/watch?v=yFkt5Urp-eg&t=245s" target="_blank"><strong>4:05</strong></a> in our demo video, where we intentionally disconnect one microphone to show the system's graceful degradation.
+With only two active microphones, the system can only generate a single hyperbolic curve of possible sound locations, resulting in a hyperbolic-shaped heatmap.
+
+<div style="display:flex; align-items:flex-center; margin-left: auto; margin-right: auto; margin-bottom: 20px; margin-top: 10px;">
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/yFkt5Urp-eg?start=245" frameborder="1" allowfullscreen class="bordered"></iframe>
+</div>
+
+<p>At <strong>4:05</strong> in our demo video (shown above), we intentionally disconnect one microphone to demonstrate the system's graceful degradation.</p>
 
 ## 5.5 Usability Assessment
 
