@@ -23,6 +23,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   A device that listens with 3 microphones, using cross-correlation 
   to instantly point you towards a sound's origin.
 baseurl: ""
+url: "" 
 
 # Build settings
 theme: just-the-docs
@@ -31,7 +32,7 @@ plugins:
   - jekyll-toc
   - jekyll-remote-theme
 
-nav_enabled: false
+nav_enabled: true
 back_to_top: true
 back_to_top_text: "Back to top"
 markdown: kramdown
