@@ -25,6 +25,9 @@ $$
 
 Due to discrete sampling, time-difference estimates are quantized by the ADC sample period and microphone spacing.
 
+![Resolution gif](./assets/images/resolution_density.gif){: .bordered }
+
+
 For example, sampling at \($100\,\mathrm{kHz}$\) \($10\,\mu\mathrm{s}$ per sample\) with an equilateral microphone triangle of \($10\,\mathrm{cm}$\) sides yields a maximum shift of about $\pm 30$ samples. Each pair of microphones then produces an integer shift in $\left[-30, +30\right]$ indicating their relative time difference.
 
 With three microphones, there are roughly $61^3$ distinct shift combinations. Increasing the ADC rate or spacing the microphones farther apart increases resolution by allowing more distinct shifts.
