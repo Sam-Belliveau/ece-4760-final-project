@@ -41,4 +41,4 @@ gem "jekyll-toc"
 gem "jekyll-remote-theme"
 
 # Lock the platform to support both Windows and Linux
-platforms :ruby, :mswin, :mingw, :x64_mingw, :jruby, :x86_64-linux
+platforms :ruby, :mswin, :mingw, :x64_mingw, :jruby, "x86_64-linux"
