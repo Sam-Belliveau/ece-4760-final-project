@@ -286,10 +286,10 @@ Blah Blah blah…
 Blah Blah blah…
 
 ## 5.5 Usability Assessment
-Overall, our implemented system was quite usable and easy to set up. To set up the system, the user simply needs to power the Pico and to connect the wires for the VGA interface. Once powered on, the system is very easy to use. Simply by making a sound (such as a snap, clap, or whistle), the user can almost instantly see the heatmap plotted on the VGA display. The only non-intuitive aspect of using the system is knowing the VGA pin wiring to the connector. 
+**Overall, our implemented system was quite usable and easy to set up. To set up the system, the user simply needs to power the Pico and to connect the wires for the VGA interface. Once powered on, the system is very easy to use. Simply by making a sound (such as a snap, clap, or whistle), the user can almost instantly see the heatmap plotted on the VGA display. The only non-intuitive aspect of using the system is knowing the VGA pin wiring to the connector. 
 Based on the plot, one can orient themselves relative to the microphones on the board, allowing the user to understand the plot without prior knowledge of how the microphones are oriented. One of the most compelling aspects of our system is the ability to make repeated noises from different locations. By moving around, the user intuitively can watch the system plot their new location.
 An assumption our triangulation makes is that the noise is coming from roughly 1 meter above the microphone. This means the best performance is achieved by placing the board on the floor. This is not an obvious thing, but does not significantly affect the triangulation and the effect the user sees. To set up the system with a new Pico, one would simply flash the code and place the Pico on the breadboard. This greatly simplifies setup, as there is nothing that needs to be inputted from a host computer to setup the Pico. There are some parameters hard-coded in the code which can be modified, such as the distance between the microphones, the sample rate and MAX_SHIFT_SAMPLES parameters among a few others than sometimes required calibration for the best performance. Nonetheless, the system is fully usable without calibration. 
----
+**---
 
 # 6. Conclusions
 
