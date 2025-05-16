@@ -23,7 +23,9 @@ Several promising avenues exist for further enhancing the system:
 
 In terms of the accuracy of our detection, we approached the theoretical limits of what's possible with our hardware. Inherent noise in the microphones and testing environment introduced some inevitable uncertainty in our VGA heatmap and localization.
 
-Overall, the project taught us a great deal about audio DSP and efficient implementation. A major takeaway is the power of software-hardware codesign—modifying our algorithms to match the hardware capabilities led to a remarkably performant system despite the limited resources of the Pico.
+One major takeaway was that improving our software—like filtering, buffering, and algorithm design—yielded much better results than immediately jumping to faster sampling or wider microphone spacing, which we originally thought were essential for accuracy. We found that hardware upgrades alone wouldn’t have solved our problems without first addressing these core software issues.
+
+Another key lesson was in localization: we initially tried to find the exact sound location from the time shifts, expecting the hyperbolas to always intersect, but mathematically this is not always the case. Creating the VGA heatmap, which we mentioned earlier, turned out to be extremely helpful for debugging and understanding these issues, and was crucial for making our system robust.
 
 ## 6.2 Standards Compliance
 
