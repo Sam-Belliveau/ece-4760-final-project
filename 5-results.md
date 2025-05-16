@@ -21,7 +21,7 @@ Blah Blah blah…
 
 Blah Blah blah…
 
-## 5.1 Safety & Robustness
+## 5.4 Safety & Robustness
 
 Our system has effectively no major safety considerations, operating at low voltages and currents. The input voltage range for the ADC pins is $0$-$3.3\text{V}$. 
 
@@ -31,7 +31,7 @@ The code is flashed to the Pico, making the system robust to power outs.  Additi
 
 This is seen in our demo video with the removal of one microphone. 
 
-## 5.2 Usability Assessment
+## 5.5 Usability Assessment
 
 Overall, our implemented system was quite usable and easy to set up. To set up the system, the user simply needs to power the Pico and to connect the wires for the VGA interface. Once powered on, the system is very easy to use. 
 
