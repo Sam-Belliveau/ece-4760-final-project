@@ -4,21 +4,6 @@ title: "0. Homepage"
 permalink: /index.html
 ---
 
-<link rel="stylesheet" href="./assets/css/custom.css">
-<link rel="stylesheet" href="./assets/css/just-the-docs-default.css">
-<script src="./assets/js/just-the-docs.js"></script>
-
-<script>
-  window.MathJax = {
-    tex: {
-      inlineMath: [['$', '$'], ['\\(', '\\)']],
-      displayMath: [['$$','$$'], ['\\[','\\]']]
-    }
-  };
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
 # Our device listens with multiple "ears," using cross-correlation to instantly point you toward a sound’s origin.
 {: .no_toc .flex-justify-around .text-center }
 
