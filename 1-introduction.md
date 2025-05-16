@@ -15,7 +15,7 @@ These estimates are averaged over time to reduce the impact of noise. Using the 
 
 The entire processing chain—from sampling to buffering, correlation, and VGA drawing—executes on the Raspberry Pi Pico.
 
-## 1.3 Motivation
+## 1.2 Motivation
 
 Our motivation was a combination of passion for signal processing and demonstrating the capabilities of low-cost hardware in audio processing. The localization system has many applications, from robotics to art installations. In a world in which there is an increasing number of applications requiring many cheap distributed sensors, there is a need for the development of algorithms capable of running on cheap, low power, hardware. 
 
