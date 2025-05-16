@@ -54,9 +54,9 @@ The entire processing chain—from sampling to buffering, correlation, and VGA d
 
 ## 1.3 Motivation
 
-Our motivation was a combination of passion for signal processing and demonstrating the capabilities of low-cost hardware in audio processing. The localization system has many applications, from robotics to art installations.
+Our motivation was a combination of passion for signal processing and demonstrating the capabilities of low-cost hardware in audio processing. The localization system has many applications, from robotics to art installations. In a world in which there is an increasing number of applications requiring many cheap distributed sensors, there is a need for the development of algorithms capable of running on cheap, low power, hardware. 
 
-The total cost of the microphones used is under $20, while the accuracy of the localization is comparable to much more expensive systems. The algorithms run purely in fixed-point math on the Pico, eliminating the need for a dedicated DSP chip. Combined with the Pico’s VGA output, this results in an all-in-one package for sound localization.
+Our project implements audio localization on system whose total BOM is under $20, with a localization accuracy comparable to much more expensive systems. The algorithms run purely in fixed-point math on the Pico, eliminating the need for a dedicated DSP chip. Combined with the Pico’s intuitive VGA output, this results in an all-in-one package for sound localization.
 
 ---
 
@@ -64,11 +64,11 @@ The total cost of the microphones used is under $20, while the accuracy of the l
 
 ## 2.1 Rationale & Inspiration
 
-Audio localization typically depends on specialized DSP hardware or simplified methods that only work with sharp transients. This often makes such projects out of reach for hobbyists.
+Audio localization typically depends on specialized DSP hardware or simplified methods that only work with sharp transients. This often makes such projects out of reach for hobbyists and also results in expensive systems.
 
 By leveraging the Raspberry Pi Pico’s ADC along with the RP2040’s fast processors, we determined it was possible to implement a more sophisticated localization technique entirely on-chip.
 
-We decided to implement a time-difference-of-arrival (TDOA) method to determine sound location. To compute the time difference between microphones, we use cross-correlations to estimate the likelihood of various sample shifts. This approach allows us to localize many types of sounds quickly and accurately on the Pico.
+We decided to implement a time-difference-of-arrival (TDOA) method to determine sound location. To compute the time difference between microphones, we use cross-correlations to estimate the likelihood of various sample shifts. As compared to FFT based approaches, this approach is significantely cheaper to compute. This approach allows us to localize many types of sounds quickly and accurately on the Pico.
 
 ## 2.2 Background Math
 
@@ -86,6 +86,24 @@ For example, sampling at \($100\,\mathrm{kHz}$\) \($10\,\mu\mathrm{s}$ per sampl
 
 With three microphones, there are roughly $61^3$ distinct shift combinations. Increasing the ADC rate or spacing the microphones farther apart increases resolution by allowing more distinct shifts.
 
+### FFT Based-Approaches
+# FFT-Based TDOA Calculation
+
+To efficiently calculate the Time Difference of Arrival (TDOA) between two microphone signals, $x[n]$ and $y[n]$, using an FFT-based approach, the following steps are typically performed:
+
+1.  **Compute Discrete Fourier Transforms (DFTs):**
+    The DFTs of the windowed signal frames are calculated.
+2.  **Form the (Weighted) Cross-Power Spectrum:**
+    The cross-power spectrum $P_{xy}(\omega) = X(\omega) Y^*(\omega)$ is computed, where $Y^*(\omega)$ is the complex conjugate of $Y(\omega)$. For improved robustness, especially in noisy or reverberant conditions, a weighting function is applied.
+3.  **Compute Inverse DFT (IDFT):**
+    The cross-correlation sequence $r_{xy}[k]$ in the time lag domain is obtained by taking the IDFT of $P_{xy}(\omega)$:
+    This sequence represents the correlation between the two signals for various time lags $k$.
+4.  **Identify Peak Lag:**
+    The lag $k_{\text{max}}$ at which the cross-correlation sequence $r_{xy}[k]$ reaches its maximum value corresponds to the estimated time delay in samples:
+    $$ k_{\text{max}} = \underset{k}{\text{argmax}} \{r_{xy}[k]\} $$
+    
+On board the Pico, the FFT module requires a fair bit of compute in terms of memory and cycle time. One of the innovations of our project is to remove the need for the calculation of the FFT prior to taking the cross-correlation. So while these approaches operate in the frequency domain, we operate on the sampled microphone power level readings. 
+
 ### Cross Correlation
 The cross correlation calculation makes up the core of our algorithm. Cross‑correlation is a sliding inner‑product that quantifies the similarity between two signals as one is shifted in time. The cross correlation operation is defined as 
 
@@ -93,13 +111,19 @@ $$
 R_{xy}[k] \;=\;\sum_{n=-\infty}^{\infty} x[n]\,y[n + k]
 $$
 
-In our case, the cross correlation peaks at a point k which represents the point at which the signals overlap the most. 
+In our case, the cross correlation peaks at a point k which represents the point at which the signals overlap the most. Where 
 
+### Time Delay of Arrival (TDOA) Calculation
 $$
 t_{delay} = \frac{k_{max}}{f_s}. 
 $$
 
 Though we use a more complex version of this, the goal of our system is to find this k_max value to find the time shift between microphones. In our project, this k is represented by the best shift. We apply some smoothing and filtering techiques, but at its core, our project finds these shifts between the microphones and uses it to determine the audio source. 
+
+Once $\tau_{\text{delay}}$ is found between a pair of microphones, it implies that the sound source lies on a specific hyperboloid with the microphones as foci.
+$$ c \cdot \tau_{\text{delay}} = d_2 - d_1 $$
+where $c$ is the speed of sound, and $d_1, d_2$ are the distances from the source to microphone 1 and 2, respectively.
+By using multiple microphone pairs, multiple TDOAs can be calculated, and the intersection of the corresponding hyperboloids gives an estimate of the sound source's location. For instance, with two microphones, the TDOA can give an angle of arrival (AOA) relative to the microphone axis.
 
 --- 
 ## 2.3 Logical Structure
