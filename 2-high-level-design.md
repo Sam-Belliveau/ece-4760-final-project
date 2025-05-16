@@ -93,6 +93,7 @@ By using multiple microphone pairs, multiple TDOAs can be calculated, and the in
  
 --- 
 ## 2.3 Logical Structure
+[!Control Flow](assets/images/control_flow_diagram.jpg)
 
 The software pipeline on a single RP2040 core follows:
 
