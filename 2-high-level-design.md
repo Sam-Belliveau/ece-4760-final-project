@@ -29,6 +29,23 @@ For example, sampling at \($100\,\mathrm{kHz}$\) \($10\,\mu\mathrm{s}$ per sampl
 
 With three microphones, there are roughly $61^3$ distinct shift combinations. Increasing the ADC rate or spacing the microphones farther apart increases resolution by allowing more distinct shifts.
 
+
+### Cross Correlation
+The cross correlation calculation makes up the core of our algorithm. Cross‑correlation is a sliding inner‑product that quantifies the similarity between two signals as one is shifted in time. The cross correlation operation is defined as 
+
+$$ 
+R_{xy}[k] \;=\;\sum_{n=-\infty}^{\infty} x[n]\,y[n + k]
+$$
+
+In our case, the cross correlation peaks at a point k which represents the point at which the signals overlap the most. This k effectively gives you the time difference of arrival between 2 microphones.
+
+### Time Delay of Arrival (TDOA) Calculation
+$$
+t_{delay} = \frac{k_{max}}{f_s}. 
+$$
+
+Though we use a more complex version of this, the goal of our system is to find this k_max value to find the time shift between microphones. In our project, this k is represented by the best shift. We apply some smoothing and filtering techiques, but at its core, our project finds these shifts between the microphones and uses it to determine the audio source. 
+
 ### FFT Based-Approaches
 To efficiently calculate the Time Difference of Arrival (TDOA) between two microphone signals, $x[n]$ and $y[n]$, using an FFT-based approach, the following steps are typically performed:
 
@@ -43,10 +60,17 @@ To efficiently calculate the Time Difference of Arrival (TDOA) between two micro
     The lag $k_{\text{max}}$ at which the cross-correlation sequence $r_{xy}[k]$ reaches its maximum value corresponds to the estimated time delay in samples:
     $$k_{\text{max}} = \underset{k}{\text{argmax}} \{r_{xy}[k]\}$$
     
-On board the Pico, the FFT module requires a fair bit of compute in terms of memory and cycle time. Additionally, for a 3-microphone setup, 3 forward and 3 inverse FFTs are required, dramatically increasing the computational load. One of the innovations of our project is to remove the need for the calculation of the FFT prior to taking the cross-correlation. So while these approaches operate in the frequency domain, we operate on the sampled microphone power level readings. 
+The FFT approach leverages the convolution theorem, which states that convolution in the time domain equals multiplication in the frequency domain:
 
-### Cross Correlation
-The cross correlation calculation makes up the core of our algorithm. Cross‑correlation is a sliding inner‑product that quantifies the similarity between two signals as one is shifted in time. The cross correlation operation is defined as 
+$$ x[n] * y[n] \Leftrightarrow X(f) \cdot Y(f) $$
+
+This property transforms the computationally expensive $O(N^2)$ cross-correlation operation into an $O(N\log N)$ process. However, for our buffer size of $N=1024$, this theoretical advantage provided minimal practical speedup. More importantly, the FFT approach introduced additional complications: increased sensitivity to phase shifts from our filters and vulnerability to non-equivalent sampling times between our three microphones. One of the innovations of our project is to remove the need for the calculation of the FFT prior to taking the cross-correlation. So while these approaches operate in the frequency domain, we operate on the sampled microphone power level readings. 
+
+### TDOA Conversion to Position
+Once $\tau_{\text{delay}}$ is found between a pair of microphones, it implies that the sound source lies on a specific hyperboloid with the microphones as foci.
+$$ c \cdot \tau_{\text{delay}} = d_2 - d_1 $$
+where $c$ is the speed of sound, and $d_1, d_2$ are the distances from the source to microphone 1 and 2, respectively.
+By using multiple microphone pairs, multiple TDOAs can be calculated, and the intersection of the corresponding hyperboloids gives an estimate of the sound source's location. For instance, with two microphones, the TDOA can give an angle of arrival (AOA) relative to the microphone axis. This approach is what is used in our implementation and also in many FFT-based systems. 
 
 $$ 
 R_{xy}[k] \;=\;\sum_{n=-\infty}^{\infty} x[n]\,y[n + k]
