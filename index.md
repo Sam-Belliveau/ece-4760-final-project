@@ -96,7 +96,7 @@ $$
 In our case, the cross correlation peaks at a point k which represents the point at which the signals overlap the most. 
 
 $$
-time\_delay = \frac{k_max}{f_s}. 
+\text{time\_delay} = \frac{k_max}{f_s}. 
 $$
 
 Though we use a more complex version of this, the goal of our system is to find this k_max value to find the time shift between microphones. In our project, this k is represented by the best shift. We apply some smoothing and filtering techiques, but at its core, our project finds these shifts between the microphones and uses it to determine the audio source. 
