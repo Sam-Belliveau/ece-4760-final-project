@@ -13,7 +13,7 @@ Each channel’s data is then streamed into a rolling buffer. When the energy in
 
 These estimates are averaged over time to reduce the impact of noise. Using the delay estimates, a heat map is drawn by comparing the expected delays from each location to the estimates calculated by our cross-correlation.
 
-The entire processing chain—from sampling to buffering, correlation, and VGA drawing—executes on the Raspberry Pi Pico.
+The entire processing chain-from sampling to buffering, correlation, and VGA drawing-executes on the Raspberry Pi Pico.
 
 ## 1.2 Motivation
 
