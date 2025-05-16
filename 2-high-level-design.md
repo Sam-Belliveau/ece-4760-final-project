@@ -14,7 +14,7 @@ By leveraging the Raspberry Pi Pico’s ADC along with the RP2040’s fast proce
 We decided to implement a time-difference-of-arrival (TDOA) method to determine sound location. To compute the time difference between microphones, we use cross-correlations to estimate the likelihood of various sample shifts. As compared to FFT based approaches, this approach is significantely cheaper to compute. This approach allows us to localize many types of sounds quickly and accurately on the Pico.
 
 ## 2.2 Background Math
-![Resolution gif](./assets/images/sample_rate_resolution_char.gif){: .float right }
+![Resolution gif](./assets/images/sample_rate_resolution_char.gif){: .float-right }
 
 At standard temperature and pressure, the speed of sound is approximately \($343\,\mathrm{m/s}$\). This means that for every additional centimeter between microphones, the maximum travel time is:
 
@@ -26,7 +26,7 @@ $$
 
 Due to discrete sampling, time-difference estimates are quantized by the ADC sample period and microphone spacing.
 
-We can see on the demos gif on the right showing theoretical maximum resolution based on the sampling rate in. The gif shows the resolution of various sample rates ranging from 0-50kHz with a 2kHz step size.
+We can see on the desmos gif on the right showing theoretical maximum resolution based on the sampling rate in. The gif shows the resolution of various sample rates ranging from 0-50kHz with a 2kHz step size. The intersection of the curves are possible locations we can estimate. Regions of white space within a triangle get mapped to the the closest "corner of intersection".
 
 
 For example, sampling at \($100\,\mathrm{kHz}$\) \($10\,\mu\mathrm{s}$ per sample\) with an equilateral microphone triangle of \($10\,\mathrm{cm}$\) sides yields a maximum shift of about $\pm 30$ samples. Each pair of microphones then produces an integer shift in $\left[-30, +30\right]$ indicating their relative time difference.
