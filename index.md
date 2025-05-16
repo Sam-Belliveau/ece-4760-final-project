@@ -92,7 +92,7 @@ To efficiently calculate the Time Difference of Arrival (TDOA) between two micro
 1.  **Compute Discrete Fourier Transforms (DFTs):**
     The DFTs of the windowed signal frames are calculated.
 2.  **Form the (Weighted) Cross-Power Spectrum:**
-    The cross-power spectrum $P_{xy}(\omega) = X(\omega) Y^*(\omega)$ is computed, where $Y^*(\omega)$ is the complex conjugate of $Y(\omega)$. For improved robustness, especially in noisy or reverberant conditions, a weighting function is applied.
+    The cross-power spectrum $$ P_{xy}(\omega) = X(\omega) Y^*(\omega) $$ is computed, where $Y^*(\omega)$ is the complex conjugate of $Y(\omega)$. For improved robustness, especially in noisy or reverberant conditions, a weighting function is applied.
 4.  **Compute Inverse DFT (IDFT):**
     The cross-correlation sequence $r_{xy}[k]$ in the time lag domain is obtained by taking the IDFT of $P_{xy}(\omega)$:
     This sequence represents the correlation between the two signals for various time lags $k$.
