@@ -74,12 +74,10 @@ The complete source code for this project is available on GitHub:
 - **ADC Setup**: Configured the ADC channels in round-robin mode for the three microphones with FIFO enabled
 - **Core Correlation Algorithm**: Developed the cross-correlation engine in `correlations.c` for time-delay estimation between microphone pairs
 - **Geometric Calculations**: Worked on the microphone geometry calculation algorithms in `microphones.c`
-- **System Integration**: Coordinated integration of all subsystems and helped with performance optimization
 
 ## Sam Belliveau (srb343)
 - **Audio Processing Pipeline**: Designed and optimized the audio processing chain from raw samples to actionable signals
 - **Rolling Buffer System**: Implemented the circular buffer system in `rolling_buffer.c` with power calculation for event detection
-- **Signal Processing Optimizations**: Created the fixed-point math implementations for faster calculations
 - **Power Calculation Algorithms**: Developed the energy-based event detection system that compares incoming vs. outgoing buffer energy
 - **Window Functions**: Designed and optimized the windowing functions for improved signal quality
 - **Exponential Moving Average**: Implemented `correlations_average()` for temporal smoothing of correlation results

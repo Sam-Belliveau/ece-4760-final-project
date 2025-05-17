@@ -19,13 +19,13 @@ The provided VGA driver uses three PIO state machines and DMA:
 - **VSYNC PIO:** Counts lines via HSYNC interrupts and manages vertical timing.
 - **RGB PIO:** Streams pixel data from a DMA-fed global pixel array (\($3$ bits per pixel\)).
 
-A \($330\,\Omega$\) resistor in series (with the Pico’s internal \($70\,\Omega$\)) forms a divider to step the Pico’s \($3.3\,\mathrm{V}$\) GPIO down to \($0$–$0.7\,\mathrm{V}$\) safe for VGA inputs.
+A \($330\,\Omega$\) resistor in series (with the Pico’s internal \($70\,\Omega$\)) forms a divider to step the Pico’s \($3.3\,\mathrm{V}$\) GPIO down to \($0$-$0.7\,\mathrm{V}$\) safe for VGA inputs.
 
 ## 3.2 Core Software Loop
 
 The heart of the system resides in the `sample_and_compute_loop()` function within `sample_compute.c`, which orchestrates audio capture, processing, and visualization. Upon startup, `vga_init()` prepares the display subsystem.
 
-The loop initializes three rolling buffers—one per microphone—and records time for pacing. In the inner sampling loop, the code:
+The loop initializes three rolling buffers-one per microphone-and records time for pacing. In the inner sampling loop, the code:
 
 1. Reads $8$-bit ADC values from `dma_sample_array` for channels A, B, and C.
 2. Converts them to signed $16$-bit samples.
@@ -51,7 +51,7 @@ When processing, `rolling_buffer_write_out()` copies samples into a contiguous `
 The cross-correlation engine in `correlations.c` provides both instantaneous and smoothed time-delay estimates.
 
 - **`correlations_init()`:**  
-  For each integer shift `s` in [–`MAX_SHIFT_SAMPLES`, +`MAX_SHIFT_SAMPLES`], it computes the dot-product of two sample buffers offset by `s` and stores the 64-bit sum in `corr->correlations[s + MAX_SHIFT_SAMPLES]`. The `best_shift` is set to the highest-scoring `s`.
+  For each integer shift `s` in [-`MAX_SHIFT_SAMPLES`, +`MAX_SHIFT_SAMPLES`], it computes the dot-product of two sample buffers offset by `s` and stores the 64-bit sum in `corr->correlations[s + MAX_SHIFT_SAMPLES]`. The `best_shift` is set to the highest-scoring `s`.
 
 - **`correlations_average()`:**  
   Applies an exponential decay filter based on elapsed time, blends new correlation values into a long-term array, and recomputes `best_shift` on the smoothed data.
@@ -60,7 +60,7 @@ The cross-correlation engine in `correlations.c` provides both instantaneous and
 
 High-throughput ADC sampling is achieved in `dma_sampler.c`.
 
-During `dma_sampler_init()`, the ADC is configured in round-robin mode for channels `0`, `1`, and `2` (GPIO26–28) with FIFO enabled and the clock divider set for maximum rate.
+During `dma_sampler_init()`, the ADC is configured in round-robin mode for channels `0`, `1`, and `2` (GPIO26-28) with FIFO enabled and the clock divider set for maximum rate.
 
 Two DMA channels are used:
 
@@ -91,4 +91,4 @@ Helper modules (`vga_correlations`, `vga_heatmap`, `vga_text`, `vga_waveforms`) 
 
 ## 3.8 Third-Party & Reused Code
 
-We build atop the official Raspberry Pi Pico SDK for multicore support, GPIO, ADC, DMA, and timing. The VGA stack uses the open-source `lib/vga/vga16_graphics` library. No proprietary IP or Altera cores are used. Math functions (`sqrtf`, `atan2f`, `exp`) come from standard C libraries. All custom modules—rolling buffers, correlation engine, DMA sampler, display routines—are authored in-house or derived from public-domain sources.
+We build atop the official Raspberry Pi Pico SDK for multicore support, GPIO, ADC, DMA, and timing. The VGA stack uses the open-source `lib/vga/vga16_graphics` library. All custom modules-rolling buffers, correlation engine, DMA sampler, display routines-are authored in-house or derived from public-domain sources.

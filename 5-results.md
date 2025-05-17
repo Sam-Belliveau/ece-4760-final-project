@@ -6,10 +6,7 @@ title: "5. Testing and Results of the Design"
 # 5. Testing and Results of the Design
 
 ## 5.1 Test Data & Traces
-Although we used an oscilloscope to measure the available compute time per sample at various sample rates and buffer sizes, we did not capture or save screenshots of these traces during development. Instead, we relied on these real-time measurements to iteratively tune our system parameters. By observing the timing between ADC sampling, DMA transfers, and our processing routines on the oscilloscope, we were able to determine the maximum safe sample rate that would allow all computations (including cross-correlation and VGA updates) to complete before the next sample arrived. This process led us to select an optimal sample rate of $50\,\mathrm{kHz}$ with a buffer size of $1024$ samples, balancing latency, noise reduction, and CPU load. While we do not have oscilloscope captures to present here, this hands-on timing analysis was critical in achieving reliable, real-time operation.
-
-
-<!-- Present oscilloscope captures of ADC sampling timing (`SAMPLE_PERIOD_US`), DMA triggers, and GPIO timing for debugging. -->
+Although we used an oscilloscope to measure the available compute time per sample at various sample rates and buffer sizes, we did not capture or save screenshots of these traces during development. Instead, we relied on these real-time measurements to iteratively tune our system parameters. By observing the timing between ADC sampling, DMA transfers, and our processing routines on the oscilloscope, we were able to determine the maximum safe sample rate that would allow all sampling based computations to complete before the next sample set arrived. This process led us to select an optimal sample rate of $50\,\mathrm{kHz}$ with a buffer size of $1024$ samples, balancing latency, noise reduction, and CPU load. While we do not have oscilloscope captures to present here, this hands-on timing analysis was critical in achieving reliable, real-time operation.
 
 ## 5.2 Performance Metrics
 
@@ -27,16 +24,16 @@ The system's accuracy exhibited predictable characteristics with distance:
 - **Distance estimation** accuracy decreased exponentially with distance from the array
 - **Height variations** affected perceived distance, sound sources higher or lower than our expected 1-meter plane appeared closer or farther respectively
 
-These characteristics are clearly demonstrated in our demo video:
+Accuracy characteristics are clearly demonstrated in our demo video:
 
 <div class="video-timestamps">
-  <h4>8:37 — Speaker positioned down and to the right</h4>
+  <h4>8:37 - Speaker positioned down and to the right</h4>
   <div style="display:flex; align-items:flex-center; margin-left: auto; margin-right: auto; margin-bottom: 20px;">
     <iframe width="560" height="315" src="https://www.youtube.com/embed/yFkt5Urp-eg?start=517" frameborder="1" allowfullscreen class="bordered"></iframe>
   </div>
   <p>A speaker playing music positioned approximately 0.75 meters down and to the right of the microphone array center is accurately located on the heatmap, with both direction and distance correctly represented.</p>
   
-  <h4>8:43 — Speaker moved to the opposite side</h4>
+  <h4>8:43 - Speaker moved to the opposite side</h4>
   <div style="display:flex; align-items:flex-center; margin-left: auto; margin-right: auto; margin-bottom: 20px;">
     <iframe width="560" height="315" src="https://www.youtube.com/embed/yFkt5Urp-eg?start=523" frameborder="1" allowfullscreen class="bordered"></iframe>
   </div>
@@ -61,7 +58,7 @@ With only two active microphones, the system can only generate a single hyperbol
   <iframe width="560" height="315" src="https://www.youtube.com/embed/yFkt5Urp-eg?start=245" frameborder="1" allowfullscreen class="bordered"></iframe>
 </div>
 
-<p>At <strong>4:05</strong> in our demo video (shown above), we intentionally disconnect one microphone to demonstrate the system's graceful degradation.</p>
+<p>At <strong>4:05</strong> in our demo video (shown above), we intentionally disconnect one microphone to demonstrate how the system uses all the information it is given to compute potential source location.</p>
 
 ## 5.5 Usability Assessment
 
@@ -73,7 +70,7 @@ Based on the plot, one can orient themselves relative to the microphones on the 
 
 One of the most compelling aspects of our system is the ability to make repeated noises from different locations. By moving around, the user intuitively can watch the system plot their new location.
 
-An assumption our triangulation makes is that the noise is coming from roughly 1 meter above the microphone. This means the best performance is achieved by placing the board on the floor. 
+An assumption our triangulation makes is that the noise is coming from roughly 1.5 meters above the microphone. This means the best performance is achieved by placing the board on the floor. 
 
 This is not an obvious thing, but does not significantly affect the triangulation and the effect the user sees. To set up the system with a new Pico, one would simply flash the code and place the Pico on the breadboard. This greatly simplifies setup, as there is nothing that needs to be inputted from a host computer to setup the Pico. 
 

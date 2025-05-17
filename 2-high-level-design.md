@@ -11,7 +11,7 @@ Audio localization typically depends on specialized DSP hardware or simplified m
 
 By leveraging the Raspberry Pi Pico's ADC along with the RP2040's fast processors, we determined it was possible to implement a more sophisticated localization technique entirely on-chip.
 
-We decided to implement a time-difference-of-arrival (TDOA) method to determine sound location. To compute the time difference between microphones, we use cross-correlations to estimate the likelihood of various sample shifts. As compared to FFT based approaches, this approach is significantely cheaper to compute. This approach allows us to localize many types of sounds quickly and accurately on the Pico.
+We decided to implement a time-difference-of-arrival (TDOA) method to determine sound location. To compute the time difference between microphones, we use cross-correlations to estimate the likelihood of various sample shifts.
 
 ## 2.2 Background Math
 
@@ -44,13 +44,6 @@ $$
 
 In our case, the cross correlation peaks at a point k which represents the point at which the signals overlap the most. This k effectively gives you the time difference of arrival between 2 microphones.
 
-### Time Delay of Arrival (TDOA) Calculation
-$$
-t_{delay} = \frac{k_{max}}{f_s}. 
-$$
-
-Though we use a more complex version of this, the goal of our system is to find this k_max value to find the time shift between microphones. In our project, this k is represented by the best shift. We apply some smoothing and filtering techiques, but at its core, our project finds these shifts between the microphones and uses it to determine the audio source. 
-
 ### FFT Based-Approaches
 To efficiently calculate the Time Difference of Arrival (TDOA) between two microphone signals, $x[n]$ and $y[n]$, using an FFT-based approach, the following steps are typically performed:
 
@@ -80,7 +73,7 @@ $$ c \cdot \tau_{\text{delay}} = d_2 - d_1 $$
 
 where $c$ is the speed of sound, and $d_1, d_2$ are the distances from the potential source position to microphones 1 and 2, respectively.
 
-Since our time delays are quantized by the sampling rate, only specific TDOA values are possible. These values create a grid of hyperbolas for each microphone pair, and only at the intersections of these hyperbolas can we uniquely identify a sound source. As shown in the animation, most points in space do not map to valid sample-shift combinations, so we map each position to its nearest hyperbola intersection.
+We do this calulation for 3 times (once for each microphone). Since our time delays are quantized by the sampling rate, only specific TDOA values are possible. These values create a grid of hyperbolas for each microphone pair, and only at the intersections of these hyperbolas can we uniquely identify a sound source. As shown in the animation, most points in space do not map to valid sample-shift combinations, so we map each position to its nearest hyperbola intersection.
 
 The visualization demonstrates how microphone spacing affects resolution. While we've scaled down the sampling rate in the animation for clarity, it illustrates a key principle: increasing the distance between microphones creates more hyperbolas within the same area, leading to more distinct intersection points. This effectively increases our system's spatial resolution without requiring a higher sampling rate.
 
@@ -119,4 +112,4 @@ Achieving \($50\,\mathrm{kHz}$\) sampling across three ADC channels on a Pico wi
 
 ## 2.5 Intellectual Property Landscape
 
-Time-difference-of-arrival localization with cross-correlation is a long-standing, public-domain DSP technique. While specific microphone array patents exist, our breadboard layout and algorithms are original or derived from public-domain sources. We use no proprietary IP, no Altera/Intel cores, and abide by open-source licenses for any third-party code.
+Time-difference-of-arrival localization with cross-correlation is a long-standing, public-domain DSP technique. While specific microphone array patents exist, our breadboard layout and algorithms are original or derived from public-domain sources.
