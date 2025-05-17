@@ -4,7 +4,7 @@ title: "0. Homepage"
 permalink: /index.html
 ---
 
-# Our device listens with multiple "ears," using cross-correlation to instantly point you toward a sound's origin.
+# We've created a $20 acoustic camera that transforms sound delays into visual heatmaps, revealing where noises originate in real-time.
 {: .no_toc .flex-justify-around .text-center }
 
 #### _Sam Belliveau - srb343_
@@ -55,3 +55,57 @@ The group approves this report for inclusion on the course website.
 ## YouTube Channel Inclusion
 
 The group approves the video for inclusion on the course YouTube channel.
+
+# Appendix B (Code Repository)
+
+The complete source code for this project is available on GitHub:
+
+<div style="text-align: left; margin-top: 10px; margin-bottom: 10px;">
+  <a href="https://github.com/Sam-Belliveau/Audio-Triangulation" target="_blank" style="font-size: 1.2em; font-weight: bold;">
+    GitHub: Audio-Triangulation
+  </a>
+</div>
+
+# Appendix C (Individual Contributions)
+
+## Ezra Riess (er495)
+- **Hardware Design**: Assembled the breadboard with right-triangular microphone positioning, implemented the second-order low-pass filters, and minimized wiring length to reduce interference
+- **DMA Configuration**: Designed and implemented the DMA-driven sampling system with continuous ping-pong DMA transfers for steady $50\,\mathrm{kHz}$ sampling
+- **ADC Setup**: Configured the ADC channels in round-robin mode for the three microphones with FIFO enabled
+- **Core Correlation Algorithm**: Developed the cross-correlation engine in `correlations.c` for time-delay estimation between microphone pairs
+- **Geometric Calculations**: Worked on the microphone geometry calculation algorithms in `microphones.c`
+- **System Integration**: Coordinated integration of all subsystems and helped with performance optimization
+
+## Sam Belliveau (srb343)
+- **Audio Processing Pipeline**: Designed and optimized the audio processing chain from raw samples to actionable signals
+- **Rolling Buffer System**: Implemented the circular buffer system in `rolling_buffer.c` with power calculation for event detection
+- **Signal Processing Optimizations**: Created the fixed-point math implementations for faster calculations
+- **Power Calculation Algorithms**: Developed the energy-based event detection system that compares incoming vs. outgoing buffer energy
+- **Window Functions**: Designed and optimized the windowing functions for improved signal quality
+- **Exponential Moving Average**: Implemented `correlations_average()` for temporal smoothing of correlation results
+- **Algorithm Tuning**: Performed detailed experimentation to find optimal buffer sizes, sampling rates, and filtering parameters
+
+## Ari Kapelyan (alk246)
+- **VGA Visualization**: Created the visualization system for the heatmap display
+- **Display Subsystem**: Implemented the `vga_draw()` and `vga_draw_lite()` functions to balance visual feedback with performance
+- **Heatmap Generation**: Developed the algorithm to convert correlation data into a visual heatmap
+- **Waveform Display**: Created the waveform visualization for real-time audio monitoring
+- **User Interface Elements**: Implemented correlation curves and markers for intuitive feedback
+- **Performance Optimization**: Designed the dual-mode rendering system that uses lightweight updates for continuous monitoring
+- **Testing & Validation**: Conducted extensive testing of the system's localization accuracy and usability
+
+# Appendix D (References & AI Declaration)
+
+## References
+Our project was primarily based on knowledge acquired in the ECE 4760 course, including lectures, labs, and course materials. We also referenced the Raspberry Pi Pico SDK documentation and the VGA library documentation.
+
+## AI Declaration
+In the development of this project:
+
+- We consulted AI (Claude, ChatGPT) to explore the feasibility of different optimization techniques and algorithmic approaches, particularly regarding signal processing methods and cross-correlation implementations.
+
+- We used code assistance tools including Cursor and GitHub Copilot during implementation, which helped with auto-completing code lines and suggesting function signatures.
+
+- Besides these tools all implementation ideas came from different group members' prior knowledge. We did not reference any specific papers or websites when making this project. 
+
+
