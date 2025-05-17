@@ -92,7 +92,7 @@ The complete source code for this project is available on GitHub:
 - **Waveform Display**: Created the waveform visualization for real-time audio monitoring
 - **User Interface Elements**: Implemented correlation curves and markers for intuitive feedback
 - **Performance Optimization**: Designed the dual-mode rendering system that uses lightweight updates for continuous monitoring
-- **Testing & Validation**: Conducted extensive testing of the system's localization accuracy and usability
+
 
 # Appendix D (References & AI Declaration)
 
